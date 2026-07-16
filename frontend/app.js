@@ -1,10 +1,10 @@
 const { useState, useEffect, useRef } = React;
 
 // Determine API base:
-// - When running on Vercel, we proxy /api/* server-side to the deployed Streamlit backend via vercel.json rewrites,
+// - When running on Vercel, we proxy /api/* server-side to the deployed Render backend via vercel.json rewrites,
 //   so use relative paths (`''`).
 // - Locally (or when not on Vercel), call the deployed backend URL directly.
-const DEPLOYED_BACKEND = "https://agentic-ai-project-scak5chlx6swzadpaq9fgy.streamlit.app";
+const DEPLOYED_BACKEND = "https://agenti-ai-project.onrender.com";
 const API_BASE = (typeof window !== 'undefined' && window.location.hostname.endsWith('vercel.app')) ? '' : DEPLOYED_BACKEND;
 
 function App() {
