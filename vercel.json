@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://agentic-ai-project-scak5chlx6swzadpaq9fgy.streamlit.app/api/:path*"
+    }
+  ]
+}
