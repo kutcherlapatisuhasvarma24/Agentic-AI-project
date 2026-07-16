@@ -5,15 +5,15 @@ Render deployment instructions for Smart Timetable Assistant
 - Branch: choose the branch you want to deploy (e.g., `main` or `render-quick`).
 
 2) Build & Start
-- Environment: Python
-- Build command: leave blank (Render will run `pip install -r requirements.txt` automatically) or set:
-  ```
-  pip install -r requirements.txt
-  ```
-- Start command (Render will set `$PORT`):
-  ```
-  uvicorn backend.main:app --host 0.0.0.0 --port $PORT
-  ```
+- Option A: Python service
+  - Environment: Python
+  - Build command: `pip install -r requirements.txt`
+  - Start command: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+
+- Option B: Docker service
+  - Choose Docker on Render
+  - Render will build using the included `Dockerfile`
+  - No custom build/start command is needed
 
 3) Environment variables
 - `OPENAI_API_KEY` — (optional) your OpenAI key.
