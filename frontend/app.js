@@ -1,5 +1,8 @@
 const { useState, useEffect, useRef } = React;
 
+// Base URL for backend API (deployed)
+const API_BASE = "https://agentic-ai-project-scak5chlx6swzadpaq9fgy.streamlit.app";
+
 function App() {
     // State Variables
     const [events, setEvents] = useState([]);
@@ -66,7 +69,7 @@ function App() {
     // API calls
     const fetchEvents = async () => {
         try {
-            const res = await fetch("/api/events");
+            const res = await fetch(`${API_BASE}/api/events`);
             const data = await res.json();
             setEvents(data);
         } catch (err) {
@@ -76,7 +79,7 @@ function App() {
 
     const fetchTasks = async () => {
         try {
-            const res = await fetch("/api/tasks");
+            const res = await fetch(`${API_BASE}/api/tasks`);
             const data = await res.json();
             setTasks(data);
         } catch (err) {
@@ -86,7 +89,7 @@ function App() {
 
     const fetchSettings = async () => {
         try {
-            const res = await fetch("/api/settings");
+            const res = await fetch(`${API_BASE}/api/settings`);
             const data = await res.json();
             setSettings(data);
             setEditingSettings(data);
@@ -104,7 +107,7 @@ function App() {
         setChatLoading(true);
 
         try {
-            const response = await fetch("/api/chat", {
+            const response = await fetch(`${API_BASE}/api/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ prompt: text })
@@ -133,7 +136,7 @@ function App() {
     const handleDeleteEvent = async (id) => {
         if (!confirm("Are you sure you want to delete this event?")) return;
         try {
-            await fetch(`/api/events/${id}`, { method: "DELETE" });
+            await fetch(`${API_BASE}/api/events/${id}`, { method: "DELETE" });
             fetchEvents();
         } catch (err) {
             console.error("Error deleting event:", err);
@@ -143,7 +146,7 @@ function App() {
     const handleDeleteTask = async (id) => {
         if (!confirm("Are you sure you want to delete this task? This will also remove any auto-scheduled study sessions associated with it.")) return;
         try {
-            await fetch(`/api/tasks/${id}`, { method: "DELETE" });
+            await fetch(`${API_BASE}/api/tasks/${id}`, { method: "DELETE" });
             fetchTasks();
             fetchEvents(); // Study sessions are events
         } catch (err) {
@@ -157,7 +160,7 @@ function App() {
         const endIso = `${newEvent.start_date}T${newEvent.end_time}:00`;
         
         try {
-            const res = await fetch("/api/events", {
+            const res = await fetch(`${API_BASE}/api/events`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -187,7 +190,7 @@ function App() {
         const dueIso = `${newTask.due_date}T${newTask.due_time}:00`;
         
         try {
-            await fetch("/api/tasks", {
+            await fetch(`${API_BASE}/api/tasks`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -211,7 +214,7 @@ function App() {
     const handleSaveSettings = async (e) => {
         e.preventDefault();
         try {
-            await fetch("/api/settings", {
+            await fetch(`${API_BASE}/api/settings`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(editingSettings)
